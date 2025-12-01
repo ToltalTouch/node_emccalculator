@@ -1,0 +1,1 @@
+Nota: coloque imagens em ./assets se desejar (icon.png, splash.png). Estes arquivos não foram criados automaticamente pelo scaffold. Para testar o app no Expo é OK não ter essas imagens — remova ou aponte para imagens existentes.
