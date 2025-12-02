@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CalculatorScreen from './src/screens/CalculatorScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 import AboutScreen from './src/screens/AboutScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
         <Stack.Screen name="Calculator" component={CalculatorScreen} options={{ title: 'Calculadora de IMC' }} />
         <Stack.Screen name="History" component={HistoryScreen} options={{ title: 'Histórico' }} />
         <Stack.Screen name="About" component={AboutScreen} options={{ title: 'Sobre' }} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Perfil' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
