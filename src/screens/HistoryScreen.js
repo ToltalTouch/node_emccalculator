@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import ResponsiveLayout from '../components/ResponsiveLayout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class HistoryScreen extends React.Component {
@@ -53,7 +54,7 @@ export default class HistoryScreen extends React.Component {
   render() {
     const { history } = this.state;
     return (
-      <View style={styles.container}>
+      <ResponsiveLayout contentStyle={styles.container}>
         <Text style={styles.title}>Histórico de IMC</Text>
         {history.length === 0 ? (
           <Text style={styles.empty}>Nenhuma entrada salva ainda.</Text>
@@ -65,7 +66,7 @@ export default class HistoryScreen extends React.Component {
             <Text style={styles.clearText}>Limpar histórico</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ResponsiveLayout>
     );
   }
 }

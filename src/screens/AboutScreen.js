@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, ActivityIndicator } from 'react-native';
+import ResponsiveLayout from '../components/ResponsiveLayout';
 
 // AboutScreen convertido para classe para demonstrar componentDidMount e uma
 // requisição AJAX simples a uma API pública (Advice Slip API) como exemplo.
@@ -30,14 +31,14 @@ export default class AboutScreen extends React.Component {
   render() {
     const { advice, loading, error } = this.state;
     return (
-      <View style={styles.container}>
+      <ResponsiveLayout contentStyle={styles.container}>
         <Text style={styles.title}>Sobre o Projeto</Text>
         <Text style={styles.text}>
           Este app foi adaptado para demonstrar uma Calculadora de IMC com histórico persistido.
         </Text>
 
         <Text style={{ marginTop: 8, fontWeight: '600' }}>Demonstração de requisição AJAX:</Text>
-        <View style={{ marginTop: 8 }}>
+        <Text style={{ marginTop: 8 }}>
           {loading ? (
             <ActivityIndicator />
           ) : error ? (
@@ -47,10 +48,10 @@ export default class AboutScreen extends React.Component {
           ) : (
             <Text>Sem dica carregada.</Text>
           )}
-        </View>
+        </Text>
 
         <Text style={styles.note}>A tela também serve de referência para a documentação e apresentação.</Text>
-      </View>
+      </ResponsiveLayout>
     );
   }
 }
