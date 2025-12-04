@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Keyboard, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Keyboard, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import ResponsiveLayout from '../components/ResponsiveLayout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppButton from '../components/AppButton';
+import Card from '../components/Card';
+import { COLORS } from '../components/theme';
 
 export default class CalculatorScreen extends React.Component {
   constructor(props) {
@@ -89,52 +92,62 @@ export default class CalculatorScreen extends React.Component {
           <View>
             <Text style={styles.title}>Calculadora de IMC</Text>
 
-            <View style={styles.formRow}>
-              <Text style={styles.label}>Peso (kg)</Text>
-              <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                placeholder="ex: 70"
-                value={peso}
-                onChangeText={(t) => this.setState({ peso: t })}
-              />
-            </View>
+            <Card>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Peso (kg)</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  placeholder="ex: 70"
+                  value={peso}
+                  onChangeText={(t) => this.setState({ peso: t })}
+                />
+              </View>
 
-            <View style={styles.formRow}>
-              <Text style={styles.label}>Altura (m)</Text>
-              <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                placeholder="ex: 1.75"
-                value={altura}
-                onChangeText={(t) => this.setState({ altura: t })}
-              />
-            </View>
+              <View style={styles.formRow}>
+                <Text style={styles.label}>Altura (m)</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  placeholder="ex: 1.75"
+                  value={altura}
+                  onChangeText={(t) => this.setState({ altura: t })}
+                />
+              </View>
 
-            <View style={styles.buttonsRow}>
-              <Button title="Calcular" onPress={this.calcularIMC} />
-              <Button title="Limpar" onPress={this.limparCampos} color="#888" />
-            </View>
+              <View style={styles.buttonsRow}>
+                <AppButton variant="primary" onPress={this.calcularIMC} style={{ flex: 1, marginRight: 8 }}>
+                  Calcular
+                </AppButton>
+                <AppButton variant="outline" onPress={this.limparCampos} style={{ flex: 1 }}>
+                  Limpar
+                </AppButton>
+              </View>
+            </Card>
           </View>
 
-          <View style={styles.resultBox}>
+          <Card style={styles.resultBox}>
             {resultado ? (
-              <>
+              <View style={styles.resultInner}>
                 <Text style={styles.resultText}>Seu IMC: {resultado}</Text>
                 <Text style={styles.classText}>{classificacao}</Text>
                 <Text style={styles.adviceText}>{conselho}</Text>
-                <View style={{ height: 12 }} />
-                <TouchableOpacity style={styles.saveButton} onPress={this.salvarHistorico} disabled={loadingSave}>
-                  <Text style={styles.saveButtonText}>{loadingSave ? 'Salvando...' : 'Salvar no Histórico'}</Text>
-                </TouchableOpacity>
-              </>
+                <AppButton variant="accent" style={styles.saveButton} onPress={this.salvarHistorico} disabled={loadingSave}>
+                  {loadingSave ? 'Salvando...' : 'Salvar no Histórico'}
+                </AppButton>
+              </View>
             ) : (
               <Text style={styles.hintText}>Preencha peso e altura e pressione Calcular</Text>
             )}
-          </View>
+          </Card>
 
           <View style={styles.footerRow}>
-            <Button title="Histórico" onPress={() => this.props.navigation.navigate('History')} />
+            <AppButton variant="outline" onPress={() => this.props.navigation.navigate('History')} style={{ flex: 1, marginRight: 8 }}>
+              Histórico
+            </AppButton>
+            <AppButton variant="outline" onPress={() => this.props.navigation.navigate('About')} style={{ flex: 1 }}>
+              Sobre
+            </AppButton>
           </View>
         </KeyboardAvoidingView>
       </ResponsiveLayout>
@@ -143,18 +156,20 @@ export default class CalculatorScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff', justifyContent: 'space-between' },
+  container: { flex: 1, padding: 16, backgroundColor: COLORS.background, justifyContent: 'space-between' },
   title: { fontSize: 22, fontWeight: '700', textAlign: 'center', marginBottom: 12 },
   formRow: { marginBottom: 10 },
   label: { marginBottom: 4 },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 8, borderRadius: 6, height: 44 },
+  input: { borderWidth: 1, borderColor: COLORS.muted, padding: 8, borderRadius: 6, height: 44, backgroundColor: COLORS.surface },
   buttonsRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
-  resultBox: { marginTop: 16, padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#eee', minHeight: 120, flexGrow: 1 },
-  resultText: { fontSize: 20, fontWeight: '700' },
-  classText: { marginTop: 6, fontSize: 16, fontWeight: '600' },
-  adviceText: { marginTop: 8, color: '#444' },
-  hintText: { color: '#666' },
-  saveButton: { marginTop: 8, backgroundColor: '#007AFF', padding: 10, borderRadius: 6, alignItems: 'center' },
+  resultBox: { marginTop: 16, padding: 12, borderRadius: 8, borderWidth: 1, borderColor: COLORS.surface, minHeight: 120, flexGrow: 1, backgroundColor: COLORS.surface },
+  title: { fontSize: 22, fontWeight: '700', textAlign: 'center', marginBottom: 12, color: COLORS.primary },
+  resultText: { fontSize: 22, fontWeight: '800', color: COLORS.text, textAlign: 'center' },
+  classText: { marginTop: 6, fontSize: 16, fontWeight: '700', color: COLORS.muted, textAlign: 'center' },
+  adviceText: { marginTop: 8, color: COLORS.muted },
+  resultInner: { alignItems: 'center', justifyContent: 'center' },
+  hintText: { color: COLORS.muted },
+  saveButton: { marginTop: 8, backgroundColor: COLORS.accent, padding: 10, borderRadius: 6, alignItems: 'center' },
   saveButtonText: { color: '#fff', fontWeight: '600' },
   footerRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 18 }
 });
