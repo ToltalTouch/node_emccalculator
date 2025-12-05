@@ -16,8 +16,8 @@ export default function ResponsiveLayout({ children, contentStyle }) {
   const isWide = window.width >= 600;
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={[styles.scrollContainer, isWide ? styles.wide : null, contentStyle]}>
-        <View style={styles.inner}>{children}</View>
+      <ScrollView contentContainerStyle={[styles.scrollContainer, isWide ? styles.wide : null]}>
+        <View style={[styles.inner, contentStyle]}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
